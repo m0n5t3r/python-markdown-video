@@ -13,7 +13,8 @@ You can get it here.
 
 It is installable as many other python modules...
 
-python setup.py install
+    python setup.py install
+
 ..., but **mdx_video.py** only has to be in your **PYTHON_PATH**. With Django, for instance, you can place it in the same directory as **settings.py**.
 
 Using my extension is like using any other extension for markdown.
@@ -38,9 +39,9 @@ This extension supports the following services:
 - Yahoo! video
 - Youtube
 
-NOTE: Blip.tv works a little differently than the others because there is no way to construct a working object with the player URL. Instead of the URL to the Blip.tv page, you will use the URL to the flv file, like #http://blip.tv/file/get/Pycon-DjangoOnJython531.flv# for example. This is located in **Files and Links** section of Blip.tv.
+NOTE: Blip.tv works a little differently than the others because there is no way to construct a working object with the player URL. Instead of the URL to the Blip.tv page, you will use the URL to the flv file, like #http://blip.tv/file/get/Pycon-DjangoOnJython531.flv for example. This is located in **Files and Links** section of Blip.tv.
 
-Adding extra services is easy. Note: This portion is relevant to the extension for python-markdown 1.7. The first part is defining what URL for the video service should look like. You do this in the extendMarkdown method of VideoExtension.
+Adding extra services is easy. Note: This portion is relevant to the extension for python-markdown 1.7. The first part is defining what URL for the video service should look like. You do this in the **extendMarkdown** method of **VideoExtension**.
 
     # This regular expression looks for a youtube URL that do not start with parenthesis.
     # It does this to avoid eating regular markdown links.
@@ -63,7 +64,7 @@ Next, we get to build the HTML. We need to add a new subclass of **markdown.Base
             height = self.ext.getConfig('youtube_height')
             return FlashObject(doc, url, width, height)
 
-For the most part, building the HTML is easy. I have defined a **flash_object** function that builds an object element that work in most cases. You only need to feed it your [minidom](http://docs.python.org/library/xml.dom.minidom.html) instance, **doc**, an **url**, and **width/height**, both as strings. You will notice that I am using self.ext.getConfig to assign my width and height. These are the extension arguments. You will want to use these too. To do so, add a new key to the **self.config** dictionary of __init__ in **VideoExtension**.
+For the most part, building the HTML is easy. I have defined a **flash_object** function that builds an object element that work in most cases. You only need to feed it your [minidom](http://docs.python.org/library/xml.dom.minidom.html) instance, **doc**, an **url**, and **width/height**, both as strings. You will notice that I am using **self.ext.getConfig** to assign my width and height. These are the extension arguments. You will want to use these too. To do so, add a new key to the **self.config** dictionary of __init__ in **VideoExtension**.
 
     'youtube_width': ['640', 'Width for Youtube videos'],
     'youtube_height': ['385', 'Height for Youtube videos'],
